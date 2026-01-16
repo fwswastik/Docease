@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DocEase+ - Your Health, Our Priority</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #888; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+<header class="bg-white shadow-md sticky top-0 z-40">
+    <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+            <i class="fas fa-heartbeat text-teal-600 text-3xl"></i>
+            <a href="#home" class="text-2xl font-bold text-gray-800">DocEase+</a>
+        </div>
+        <div class="hidden md:flex space-x-6">
+            <a href="#doctors" class="text-gray-600 hover:text-teal-600 transition">Find Doctors</a>
+            <a href="#diseases" class="text-gray-600 hover:text-teal-600 transition">Diseases</a>
+            <a href="#hospitals" class="text-gray-600 hover:text-teal-600 transition">Hospitals</a>
+            <a href="#diet" class="text-gray-600 hover:text-teal-600 transition">Diet Plans</a>
+            <a href="#pharmacy" class="text-gray-600 hover:text-teal-600 transition">Pharmacy</a>
+        </div>
+        <div class="flex items-center space-x-4">
+            <button onclick="toggleMenu()" class="md:hidden text-gray-700">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+            <button onclick="toggleCart()" class="relative text-gray-700 hover:text-teal-600">
+                <i class="fas fa-shopping-cart text-xl"></i>
+                <span id="cart-count" class="absolute -top-2 -right-2 bg-teal-600 text-white text-xs px-1.5 py-0.5 rounded-full hidden">0</span>
+            </button>
+            <a href="#emergency" class="bg-teal-600 text-white px-4 py-2 rounded-full hover:bg-teal-700 transition">
+                <i class="fas fa-phone-alt mr-2"></i>Emergency
+            </a>
+        </div>
+    </nav>
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t px-6 py-4 space-y-3">
+        <a href="#doctors" class="block text-gray-600 hover:text-teal-600">Find Doctors</a>
+        <a href="#diseases" class="block text-gray-600 hover:text-teal-600">Diseases</a>
+        <a href="#hospitals" class="block text-gray-600 hover:text-teal-600">Hospitals</a>
+        <a href="#diet" class="block text-gray-600 hover:text-teal-600">Diet Plans</a>
+        <a href="#pharmacy" class="block text-gray-600 hover:text-teal-600">Pharmacy</a>
+    </div>
+</header>
+
+<div id="cart-sidebar" class="fixed top-0 right-0 h-full w-80 bg-white shadow-lg transform translate-x-full transition-transform duration-300 z-50 p-4 flex flex-col">
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-lg font-bold">Your Cart</h2>
+        <button onclick="toggleCart()" class="text-gray-500 hover:text-red-600">&times;</button>
+    </div>
+    <ul id="cart-items" class="space-y-2 flex-grow overflow-y-auto"></ul>
+    <p id="empty-cart" class="text-gray-500 text-sm">Your cart is empty.</p>
+    <div id="cart-footer" class="mt-4 hidden">
+        <p class="font-semibold mb-2">Total: ₹<span id="cart-total">0</span></p>
+        <button onclick="checkout()" class="w-full bg-teal-600 text-white py-2 rounded hover:bg-teal-700">Checkout</button>
+    </div>
+</div>
+
+<main>
+<section id="home" class="bg-gradient-to-r from-teal-500 to-blue-600 text-white py-20">
+    <div class="container mx-auto px-6 text-center">
+        <h1 class="text-5xl font-bold mb-4">Your Health, Our Mission</h1>
+        <p class="text-xl mb-8">Find doctors, hospitals, diet plans, and order medicines, all in one place.</p>
+        <div class="max-w-2xl mx-auto">
+            <input type="text" id="mainSearch" placeholder="Search for symptoms, doctors, or medicines..." class="w-full p-4 rounded-full text-gray-800 text-lg focus:outline-none">
+        </div>
+    </div>
+</section>
+
+<section id="doctors" class="py-16">
+    <div class="container mx-auto px-6">
+        <h2 class="text-3xl font-bold text-center mb-8">Find a Doctor</h2>
+        <div class="mb-6 text-center">
+            <input type="text" id="doctorSearch" placeholder="Search by specialty or name..." class="w-full md:w-1/2 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500">
+        </div>
+        <div id="doctorList" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="doctor-card bg-white p-6 rounded-lg shadow-lg">
+                <img src="image copy.png" class="w-32 h-32 rounded-full mx-auto mb-4">
+                <h3 class="text-xl font-semibold text-center">Dr. Aryan</h3>
+                <p class="text-center text-gray-600">Cardiologist</p>
+                <button onclick="openAppointment('Dr. Aryan')" class="mt-4 w-full bg-teal-600 text-white py-2 rounded">Book Appointment</button>
+            </div>
+            <div class="doctor-card bg-white p-6 rounded-lg shadow-lg">
+                <img src="WhatsApp Image 2026-01-16 at 22.17.00.jpeg" class="w-32 h-32 rounded-full mx-auto mb-4">
+                <h3 class="text-xl font-semibold text-center">Dr. Sarthak</h3>
+                <p class="text-center text-gray-600">Neurologist</p>
+                <button onclick="openAppointment('Dr. Sarthak')" class="mt-4 w-full bg-teal-600 text-white py-2 rounded">Book Appointment</button>
+            </div>
+            <div class="doctor-card bg-white p-6 rounded-lg shadow-lg">
+                <img src="image.png" class="w-32 h-32 rounded-full mx-auto mb-4">
+                <h3 class="text-xl font-semibold text-center">Dr. AP Singh</h3>
+                <p class="text-center text-gray-600">Gynaecologist</p>
+                <button onclick="openAppointment('Dr. AP Singh')" class="mt-4 w-full bg-teal-600 text-white py-2 rounded">Book Appointment</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="hospitals" class="py-16 bg-gray-100">
+    <div class="container mx-auto px-6">
+        <h2 class="text-3xl font-bold text-center mb-8">Hospitals Near You</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h3 class="text-2xl font-semibold">AIIMS Delhi</h3>
+                <p class="text-gray-600">Ansari Nagar, New Delhi</p>
+                <p class="text-gray-600">+91 62658 78500</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h3 class="text-2xl font-semibold">Apollo Hospital</h3>
+                <p class="text-gray-600">Lucknow, Uttar Pradesh</p>
+                <p class="text-gray-600">+91 72829 70200</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="diseases" class="py-16 bg-gray-100">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center mb-4">Common Diseases: Information & Care</h2>
+                <p class="text-center text-gray-600 mb-8 max-w-3xl mx-auto">Understanding common ailments is the first step towards prevention and effective management. Find information on symptoms, common treatments, and dietary recommendations. <strong>Disclaimer: This information is for educational purposes only and is not a substitute for professional medical advice.</strong></p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                   
+                    <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-head-side-cough text-3xl text-blue-500 mr-3"></i>
+                            <h3 class="text-xl font-semibold">Common Cold</h3>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">A viral infection of the nose and throat.</p>
+                        <div class="mb-3">
+                            <h4 class="font-semibold text-gray-800">Common Cure:</h4>
+                            <p class="text-sm text-gray-700">Rest, hydration, and over-the-counter medications for symptom relief (e.g., decongestants, pain relievers).</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800">Recommended Diet:</h4>
+                            <p class="text-sm text-gray-700">Focus on fluids like water, broth, and herbal tea. Vitamin C-rich foods like oranges and bell peppers can help. Avoid alcohol and caffeine.</p>
+                        </div>
+                    </div>
+
+                  
+                    <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-thermometer-full text-3xl text-red-500 mr-3"></i>
+                            <h3 class="text-xl font-semibold">Influenza (Flu)</h3>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">A contagious respiratory illness caused by influenza viruses.</p>
+                        <div class="mb-3">
+                            <h4 class="font-semibold text-gray-800">Common Cure:</h4>
+                            <p class="text-sm text-gray-700">Annual vaccination is the best prevention. Antiviral drugs may be prescribed. Rest and fluids are crucial for recovery.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800">Recommended Diet:</h4>
+                            <p class="text-sm text-gray-700">Eat light, nutritious meals. Chicken soup, garlic, ginger, and foods rich in zinc (like beans and nuts) can support the immune system.</p>
+                        </div>
+                    </div>
+
+                  
+                    <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-heartbeat text-3xl text-pink-500 mr-3"></i>
+                            <h3 class="text-xl font-semibold">Hypertension (High Blood Pressure)</h3>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">A condition where the force of the blood against the artery walls is too high.</p>
+                        <div class="mb-3">
+                            <h4 class="font-semibold text-gray-800">Common Cure:</h4>
+                            <p class="text-sm text-gray-700">Lifestyle changes are key. Medications like diuretics, ACE inhibitors, or beta-blockers may be prescribed by a doctor.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800">Recommended Diet:</h4>
+                            <p class="text-sm text-gray-700">DASH diet: rich in fruits, vegetables, whole grains, and low-fat dairy. Reduce sodium, saturated fats, and red meat.</p>
+                        </div>
+                    </div>
+
+                   
+                    <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-tint text-3xl text-purple-500 mr-3"></i>
+                            <h3 class="text-xl font-semibold">Type 2 Diabetes</h3>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">A chronic condition affecting the way the body metabolizes sugar (glucose).</p>
+                        <div class="mb-3">
+                            <h4 class="font-semibold text-gray-800">Common Cure:</h4>
+                            <p class="text-sm text-gray-700">Managed through diet, exercise, blood sugar monitoring, and sometimes oral medications or insulin therapy.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800">Recommended Diet:</h4>
+                            <p class="text-sm text-gray-700">Control carbohydrate intake. Focus on high-fiber foods, lean proteins, and healthy fats. Avoid sugary drinks and processed foods.</p>
+                        </div>
+                    </div>
+
+                
+                    <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-dizzy text-3xl text-yellow-600 mr-3"></i>
+                            <h3 class="text-xl font-semibold">Anemia (Iron-Deficiency)</h3>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">A condition where the blood lacks healthy red blood cells or hemoglobin.</p>
+                        <div class="mb-3">
+                            <h4 class="font-semibold text-gray-800">Common Cure:</h4>
+                            <p class="text-sm text-gray-700">Iron supplements and increasing dietary iron intake. In severe cases, blood transfusions or iron injections may be needed.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800">Recommended Diet:</h4>
+                            <p class="text-sm text-gray-700">Eat iron-rich foods like red meat, beans, lentils, spinach, and fortified cereals. Consume vitamin C (e.g., citrus fruits) to enhance iron absorption.</p>
+                        </div>
+                    </div>
+
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-lungs text-3xl text-teal-600 mr-3"></i>
+                            <h3 class="text-xl font-semibold">Asthma</h3>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">A condition in which airways narrow and swell and produce extra mucus.</p>
+                        <div class="mb-3">
+                            <h4 class="font-semibold text-gray-800">Common Cure:</h4>
+                            <p class="text-sm text-gray-700">Managed with long-term control medications (like inhaled corticosteroids) and quick-relief (rescue) inhalers. Identifying and avoiding triggers is crucial.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800">Recommended Diet:</h4>
+                            <p class="text-sm text-gray-700">A diet rich in fruits and vegetables (vitamin C and E) may be beneficial. Some people find that avoiding sulfites (found in wine, dried fruit) helps.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+<section id="diet" class="py-16">
+    <div class="container mx-auto px-6">
+        <h2 class="text-3xl font-bold text-center mb-8">Diet Plans</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h3 class="text-xl font-semibold mb-2">Weight Loss</h3>
+                <button onclick="showDietDetails('weight')" class="bg-teal-600 text-white px-4 py-2 rounded">View Plan</button>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h3 class="text-xl font-semibold mb-2">Vegetarian</h3>
+                <button onclick="showDietDetails('veg')" class="bg-teal-600 text-white px-4 py-2 rounded">View Plan</button>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h3 class="text-xl font-semibold mb-2">Diabetic Friendly</h3>
+                <button onclick="showDietDetails('diabetic')" class="bg-teal-600 text-white px-4 py-2 rounded">View Plan</button>
+            </div>
+        </div>
+        <div id="dietDetails" class="mt-6 bg-gray-100 p-6 rounded-lg text-center hidden"></div>
+    </div>
+</section>
+
+<section id="pharmacy" class="py-16 bg-gray-100">
+    <div class="container mx-auto px-6">
+        <h2 class="text-3xl font-bold text-center mb-8">Online Pharmacy</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                <h3 class="text-xl font-semibold mb-2">Paracetamol</h3>
+                <p class="text-gray-600 mb-4">₹50</p>
+                <button onclick="addToCart('Paracetamol', 50)" class="bg-teal-600 text-white px-4 py-2 rounded">Add to Cart</button>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                <h3 class="text-xl font-semibold mb-2">Vitamin C</h3>
+                <p class="text-gray-600 mb-4">₹120</p>
+                <button onclick="addToCart('Vitamin C', 120)" class="bg-teal-600 text-white px-4 py-2 rounded">Add to Cart</button>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                <h3 class="text-xl font-semibold mb-2">Cough Syrup</h3>
+                <p class="text-gray-600 mb-4">₹90</p>
+                <button onclick="addToCart('Cough Syrup', 90)" class="bg-teal-600 text-white px-4 py-2 rounded">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="emergency" class="py-16 bg-red-50">
+    <div class="container mx-auto px-6 text-center">
+        <h2 class="text-3xl font-bold text-red-600 mb-6">Emergency Services</h2>
+        <p class="text-lg text-gray-700 mb-4">Call immediately if you or someone else is in danger.</p>
+        <div class="space-y-2">
+            <p><strong>Ambulance:</strong> 108</p>
+            <p><strong>Police:</strong> 112</p>
+            <p><strong>Fire:</strong> 101</p>
+            <p><strong>Hospital Emergency Desk:</strong> +91 98765 43210</p>
+        </div>
+        <a href="tel:108" class="inline-block mt-6 bg-red-600 text-white px-6 py-3 rounded-full text-lg hover:bg-red-700 transition">
+            <i class="fas fa-phone-alt mr-2"></i>Call Ambulance Now
+        </a>
+    </div>
+</section>
+
+</main>
+<div id="appointment-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-lg w-96">
+        <h3 class="text-xl font-bold mb-4">Book Appointment</h3>
+        <p class="mb-2">Doctor: <strong id="selected-doctor"></strong></p>
+        <input type="text" id="patient-name" placeholder="Your Name" class="w-full p-2 border rounded mb-2">
+        <input type="date" id="appointment-date" class="w-full p-2 border rounded mb-2">
+        <input type="time" id="appointment-time" class="w-full p-2 border rounded mb-4">
+        <div class="flex justify-between">
+            <button onclick="closeAppointment()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
+            <button onclick="confirmAppointment()" class="px-4 py-2 bg-teal-600 text-white rounded">Confirm</button>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('mainSearch')?.addEventListener('input', e => {
+    const value = e.target.value.toLowerCase();
+    document.querySelectorAll('.doctor-card, .bg-white.p-6.rounded-lg.shadow-lg, .bg-white.p-6.rounded-lg.shadow-lg.text-center').forEach(card => {
+        card.style.display = card.textContent.toLowerCase().includes(value) ? '' : 'none';
+    });
+});
+
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+function toggleCart() {
+    document.getElementById('cart-sidebar').classList.toggle('translate-x-full');
+}
+
+function toggleMenu() {
+    document.getElementById('mobile-menu').classList.toggle('hidden');
+}
+
+function addToCart(name, price) {
+    cart.push({ name, price });
+    saveAndUpdate();
+}
+
+function removeFromCart(i) {
+    cart.splice(i, 1);
+    saveAndUpdate();
+}
+
+function saveAndUpdate() {
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCart();
+}
+
+function updateCart() {
+    const list = document.getElementById('cart-items');
+    const count = document.getElementById('cart-count');
+    const empty = document.getElementById('empty-cart');
+    const totalBox = document.getElementById('cart-footer');
+    const totalEl = document.getElementById('cart-total');
+
+    list.innerHTML = '';
+    count.textContent = cart.length;
+
+    if (cart.length === 0) {
+        empty.classList.remove('hidden');
+        count.classList.add('hidden');
+        totalBox.classList.add('hidden');
+    } else {
+        empty.classList.add('hidden');
+        count.classList.remove('hidden');
+        totalBox.classList.remove('hidden');
+
+        let total = 0;
+        cart.forEach((item, i) => {
+            total += item.price;
+            const li = document.createElement('li');
+            li.className = "flex justify-between items-center bg-gray-100 p-2 rounded";
+            li.innerHTML = `${item.name} - ₹${item.price} <button onclick="removeFromCart(${i})" class="text-red-500">&times;</button>`;
+            list.appendChild(li);
+        });
+        totalEl.textContent = total;
+    }
+}
+
+function checkout() {
+    alert("Order placed successfully!");
+    cart = [];
+    saveAndUpdate();
+    toggleCart();
+}
+
+function showDietDetails(type) {
+    const plans = {
+        weight: ['Oats with fruits','Dal roti sabzi','Grilled paneer with salad'],
+        veg: ['Poha','Rajma chawal','Vegetable stir-fry'],
+        diabetic: ['Sprouts salad','Multigrain roti with sabzi','Low-fat curd']
+    };
+    const box = document.getElementById('dietDetails');
+    box.innerHTML = plans[type].join('<br>');
+    box.classList.remove('hidden');
+}
+
+document.getElementById('doctorSearch')?.addEventListener('input', e => {
+    const v = e.target.value.toLowerCase();
+    document.querySelectorAll('.doctor-card').forEach(c => {
+        c.style.display = c.textContent.toLowerCase().includes(v) ? '' : 'none';
+    });
+});
+
+updateCart();
+
+
+let selectedDoctor = '';
+
+function openAppointment(doctorName) {
+    selectedDoctor = doctorName;
+    document.getElementById('selected-doctor').textContent = doctorName;
+    document.getElementById('appointment-modal').classList.remove('hidden');
+}
+
+function closeAppointment() {
+    document.getElementById('appointment-modal').classList.add('hidden');
+}
+
+function confirmAppointment() {
+    const name = document.getElementById('patient-name').value;
+    const date = document.getElementById('appointment-date').value;
+    const time = document.getElementById('appointment-time').value;
+
+    if (!name || !date || !time) {
+        alert("Please fill all details.");
+        return;
+    }
+
+    alert(`Appointment booked!\nDoctor: ${selectedDoctor}\nName: ${name}\nDate: ${date}\nTime: ${time}`);
+    closeAppointment();
+}
+</script>
+
+</body>
+</html>
